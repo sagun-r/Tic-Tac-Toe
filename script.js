@@ -1,22 +1,41 @@
 const Gameboard = () => {
   const rows = 3;
   const columns = 3;
-  const gameboard = [];
+  const board = [];
 
-  const players = {
-    playerOne: "Player One",
-    playerTwo: "Player Two",
-  };
+  const players = [
+    (PlayerOne = {
+      name: "Player One",
+      symbol: "X",
+    }),
+    (PlayerTwo = {
+      name: "Player Two",
+      symbol: "O",
+    }),
+  ];
 
   for (i = 0; i < rows; i++) {
-    gameboard.push([]);
+    board.push([]);
     for (j = 0; j < columns; j++) {
-      gameboard[i].push("test");
+      board[i].push(Spaces());
     }
   }
-  console.table(gameboard);
+  console.table(board);
 };
 
-const GameController = () => {};
+(Spaces = () => {
+  const doSomething = () => {};
+  const doSomethingElse = () => {};
+  return { doSomething, doSomethingElse };
+})();
 
 Gameboard();
+
+const GameController = () => {
+  //Initial
+  const activePlayer = players[0];
+  console.log(players[0]);
+  const switchPlayer = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
+};
