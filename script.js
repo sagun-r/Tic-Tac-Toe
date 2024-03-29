@@ -1,41 +1,66 @@
-const Gameboard = () => {
+Gameboard = () => {
   const rows = 3;
   const columns = 3;
-  const board = [];
+  const gameboard = [];
 
-  const players = [
-    (PlayerOne = {
-      name: "Player One",
-      symbol: "X",
-    }),
-    (PlayerTwo = {
-      name: "Player Two",
-      symbol: "O",
-    }),
-  ];
+  const getGameboard = () => gameboard;
 
   for (i = 0; i < rows; i++) {
-    board.push([]);
+    gameboard.push([]);
     for (j = 0; j < columns; j++) {
-      board[i].push(Spaces());
+      gameboard[i].push(Spaces());
     }
   }
-  console.table(board);
+  return { getGameboard };
 };
 
-(Spaces = () => {
+Spaces = () => {
   const doSomething = () => {};
   const doSomethingElse = () => {};
   return { doSomething, doSomethingElse };
-})();
+};
 
-Gameboard();
-
-const GameController = () => {
-  //Initial
+const GameController = (playerOneName = "Player One", playerTwoName = "Player Two") => {
+  const players = [
+    {
+      name: playerOneName,
+      symbol: "X",
+    },
+    {
+      name: playerTwoName,
+      symbol: "O",
+    },
+  ];
+  //Set initial player
   const activePlayer = players[0];
-  console.log(players[0]);
+
   const switchPlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
   };
+
+  const getActivePlayer = () => activePlayer;
+
+  return {
+    switchPlayer,
+    getActivePlayer,
+  };
 };
+
+const ScreenController = () => {
+  const whosTurn = document.querySelector(".whos-turn");
+  const divBoard = document.querySelector(".board");
+
+  const game = GameController();
+
+  const updateScreen = () => {
+    divBoard.textContent = "";
+
+    const gameboard = Gameboard().getGameboard;
+    const activePlayer = game.getActivePlayer();
+
+    whosTurn.textContent = `${activePlayer.name}'s turn.`;
+  };
+  updateScreen();
+};
+
+ScreenController();
