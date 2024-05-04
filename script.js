@@ -32,7 +32,7 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
     },
   ];
   //Set initial player
-  const activePlayer = players[0];
+  activePlayer = players[0];
 
   const switchPlayer = () => {
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -53,14 +53,19 @@ const ScreenController = () => {
   const game = GameController();
 
   const updateScreen = () => {
-    divBoard.textContent = "";
+    divBoard.textContent = "Testing";
+    divBoard.textContent = gameboard;
 
     const gameboard = Gameboard().getGameboard;
-    const activePlayer = game.getActivePlayer();
+    activePlayer = game.getActivePlayer();
 
     whosTurn.textContent = `${activePlayer.name}'s turn.`;
+
+    activePlayer = game.getActivePlayer();
+    console.log(activePlayer.name);
   };
   updateScreen();
+  game.switchPlayer();
 };
 
 ScreenController();
