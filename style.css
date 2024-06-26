@@ -3,3 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.board {
+  background-color: yellow;
+  display: flex;
+  height: 50vh;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.board button {
+  flex: 0 0 33%;
+}
