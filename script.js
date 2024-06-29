@@ -12,20 +12,27 @@ Gameboard = () => {
 
   const getGameboard = () => gameboard;
 
-  const putSymbol = (column, player) => {};
+  const putSymbol = (row, col, player) => {
+    gameboard[row][col].setValue(player.symbol);
+    console.log(gameboard[row][col].getValue());
+    console.table(gameboard);
+  };
 
-  return { getGameboard };
+  return { getGameboard, putSymbol };
 };
 
 Space = () => {
   let value = 0;
   const getValue = () => value;
-  const getSymbol = () => activePlayer.symbol;
-  return { getValue, getSymbol };
+  const getSymbol = () => (value ? value : activePlayer.symbol);
+  const setValue = (symbol) => {
+    value = symbol;
+  };
+  return { getValue, getSymbol, setValue };
 };
 
 const GameController = (playerOneName = "Player One", playerTwoName = "Player Two") => {
-  // const gameboard = Gameboard();
+  const gameboard = Gameboard();
 
   const players = [
     {
@@ -49,6 +56,7 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
   return {
     switchPlayer,
     getActivePlayer,
+    gameboard,
   };
 };
 
@@ -61,33 +69,38 @@ const ScreenController = () => {
   const updateScreen = () => {
     divBoard.textContent = "";
 
-    const gameboard = Gameboard().getGameboard();
+    const gameboard = game.gameboard.getGameboard();
 
-    gameboard.forEach((row) => {
-      row.forEach((space, index) => {
+    gameboard.forEach((row, rowIndex) => {
+      row.forEach((space, colIndex) => {
         const divBtn = document.createElement("button");
-
-        // divBtn.textContent = space.getValue();
-        console.log(space);
-        console.log(index);
+        divBtn.textContent = space.getValue() ? space.getValue() : "";
         divBoard.append(divBtn);
-        divBtn.addEventListener("click", () => {
-          alert(space.getSymbol());
+        whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn.`;
+        divBtn.addEventListener("click", (e) => {
+          console.log(game.gameboard.getGameboard());
+          if (e.target.textContent == "") {
+            e.target.textContent = game.getActivePlayer().symbol;
+            game.gameboard.putSymbol(rowIndex, colIndex, game.getActivePlayer());
+            game.switchPlayer();
+            whosTurn.textContent = `${activePlayer.name} (${activePlayer.symbol})'s turn.`;
+          }
         });
       });
     });
-
-    console.log(gameboard);
-    activePlayer = game.getActivePlayer();
-
-    whosTurn.textContent = `${activePlayer.name}'s turn.`;
-
-    console.log(activePlayer.name);
   };
   updateScreen();
-  // game.switchPlayer();
-  activePlayer = game.getActivePlayer();
-  whosTurn.textContent = `${activePlayer.name}'s turn.`;
+  whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn.`;
 };
+
+//     console.log(gameboard);
+//     activePlayer = game.getActivePlayer();
+
+//     console.log(activePlayer.name);
+//   };
+//   updateScreen();
+//   activePlayer = game.getActivePlayer();
+//   whosTurn.textContent = `${activePlayer.name} (${activePlayer.symbol})'s turn.`;
+// };
 
 ScreenController();

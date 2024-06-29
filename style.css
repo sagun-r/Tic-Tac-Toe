@@ -4,14 +4,18 @@
   box-sizing: border-box;
 }
 
-.board {
-  background-color: yellow;
+.container {
+  height: 100vh;
   display: flex;
-  height: 50vh;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+.board {
+  aspect-ratio: 1/1;
+  width: 50vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 .board button {
-  flex: 0 0 33%;
 }
