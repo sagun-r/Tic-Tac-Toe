@@ -52,9 +52,8 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
   const getActivePlayer = () => activePlayer;
 
   const isWinner = (turn) => {
-    if (turn == 9) {
-      alert("Its a draw");
-    } else if (
+    const playingSpaces = document.querySelectorAll(".playing-space");
+    if (
       //X across first row
       (gameboard.getGameboard()[0][0].getValue() == players[0].symbol &&
         gameboard.getGameboard()[0][1].getValue() == players[0].symbol &&
@@ -88,7 +87,13 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
         gameboard.getGameboard()[2][1].getValue() == players[0].symbol &&
         gameboard.getGameboard()[2][2].getValue() == players[0].symbol)
     ) {
-      alert(players[0].name + " Wins!");
+      setTimeout(() => {
+        alert(players[0].name + " Wins!");
+      }, 500);
+      //disables buttons
+      for (const playingSpace of playingSpaces) {
+        playingSpace.disabled = true;
+      }
     } else if (
       //O across first row
       (gameboard.getGameboard()[0][0].getValue() == players[1].symbol &&
@@ -123,7 +128,21 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
         gameboard.getGameboard()[2][1].getValue() == players[1].symbol &&
         gameboard.getGameboard()[2][2].getValue() == players[1].symbol)
     ) {
-      alert(players[1].name + " Wins!");
+      setTimeout(() => {
+        alert(players[1].name + " Wins!");
+      }, 500);
+      //disables buttons
+      for (const playingSpace of playingSpaces) {
+        playingSpace.disabled = true;
+      }
+    } else if (turn == 9) {
+      setTimeout(() => {
+        alert("Its a draw");
+      }, 500);
+      //disables buttons
+      for (const playingSpace of playingSpaces) {
+        playingSpace.disabled = true;
+      }
     }
   };
 
@@ -151,6 +170,7 @@ const ScreenController = () => {
     gameboard.forEach((row, rowIndex) => {
       row.forEach((space, colIndex) => {
         const divBtn = document.createElement("button");
+        divBtn.className = "playing-space";
         divBtn.textContent = space.getValue() ? space.getValue() : "";
         divBoard.append(divBtn);
         whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn.`;
