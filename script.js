@@ -29,19 +29,23 @@ Space = () => {
   return { getValue, getSymbol, setValue };
 };
 
-const GameController = (playerOneName = "Player One", playerTwoName = "Player Two") => {
+const GameController = (playerOne = "PLAYER 1", playerTwo = "PLAYER 2") => {
   const gameboard = Gameboard();
 
   const players = [
     {
-      name: playerOneName,
+      name: playerOne,
       symbol: "X",
     },
     {
-      name: playerTwoName,
+      name: playerTwo,
       symbol: "O",
     },
   ];
+  // if (players[0].name == null || player[1].name == null) {
+  //   players[0].name = "";
+  //   players[1].name = "";
+  // }
   //Set initial player
   activePlayer = players[0];
 
@@ -159,9 +163,9 @@ const ScreenController = () => {
 
   const whosTurn = document.querySelector(".whos-turn");
   const divBoard = document.querySelector(".board");
-  const newGameBtn = document.querySelector(".newGame");
+  const resetBtn = document.querySelector(".resetBtn");
 
-  newGameBtn.addEventListener("click", () => {
+  resetBtn.addEventListener("click", () => {
     turn = 0;
     const gameboard = game.gameboard.getGameboard();
     gameboard.forEach((row) => {
@@ -169,7 +173,6 @@ const ScreenController = () => {
         space.setValue("");
       });
     });
-    updateScreen();
     ScreenController();
   });
 
@@ -186,14 +189,14 @@ const ScreenController = () => {
         divBtn.className = "playing-space";
         divBtn.textContent = space.getValue() ? space.getValue() : "";
         divBoard.append(divBtn);
-        whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn.`;
+        whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn`;
         divBtn.addEventListener("click", (e) => {
           if (e.target.textContent == "") {
             turn++;
             e.target.textContent = game.getActivePlayer().symbol;
             game.gameboard.putSymbol(rowIndex, colIndex, game.getActivePlayer());
             game.switchPlayer();
-            whosTurn.textContent = `${activePlayer.name} (${activePlayer.symbol})'s turn.`;
+            whosTurn.textContent = `${activePlayer.name} (${activePlayer.symbol})'s turn`;
             game.isWinner(turn);
           }
         });
