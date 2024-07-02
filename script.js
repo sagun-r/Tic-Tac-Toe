@@ -89,7 +89,7 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
     ) {
       setTimeout(() => {
         alert(players[0].name + " Wins!");
-      }, 500);
+      }, 100);
       //disables buttons
       for (const playingSpace of playingSpaces) {
         playingSpace.disabled = true;
@@ -130,7 +130,7 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
     ) {
       setTimeout(() => {
         alert(players[1].name + " Wins!");
-      }, 500);
+      }, 100);
       //disables buttons
       for (const playingSpace of playingSpaces) {
         playingSpace.disabled = true;
@@ -138,7 +138,7 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
     } else if (turn == 9) {
       setTimeout(() => {
         alert("Its a draw");
-      }, 500);
+      }, 100);
       //disables buttons
       for (const playingSpace of playingSpaces) {
         playingSpace.disabled = true;
@@ -159,6 +159,19 @@ const ScreenController = () => {
 
   const whosTurn = document.querySelector(".whos-turn");
   const divBoard = document.querySelector(".board");
+  const newGameBtn = document.querySelector(".newGame");
+
+  newGameBtn.addEventListener("click", () => {
+    turn = 0;
+    const gameboard = game.gameboard.getGameboard();
+    gameboard.forEach((row) => {
+      row.forEach((space) => {
+        space.setValue("");
+      });
+    });
+    updateScreen();
+    ScreenController();
+  });
 
   const game = GameController();
 
