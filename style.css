@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #23576c;
+  --secondary-color: #f4a261;
+  --accent-color: #e76f51;
+}
 * {
   margin: 0;
   padding: 0;
@@ -5,6 +10,7 @@
 }
 
 .container {
+  background-color: var(--primary-color);
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -17,4 +23,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
+}
+
+.board button {
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  border: 1px rgb(187, 187, 187) dashed;
 }
