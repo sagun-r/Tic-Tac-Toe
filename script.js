@@ -90,17 +90,6 @@ const ScreenController = () => {
     });
   };
   updateScreen();
-  whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn.`;
 };
-
-//     console.log(gameboard);
-//     activePlayer = game.getActivePlayer();
-
-//     console.log(activePlayer.name);
-//   };
-//   updateScreen();
-//   activePlayer = game.getActivePlayer();
-//   whosTurn.textContent = `${activePlayer.name} (${activePlayer.symbol})'s turn.`;
-// };
 
 ScreenController();
