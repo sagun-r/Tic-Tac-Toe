@@ -14,8 +14,6 @@ Gameboard = () => {
 
   const putSymbol = (row, col, player) => {
     gameboard[row][col].setValue(player.symbol);
-    console.log(gameboard[row][col].getValue());
-    console.table(gameboard);
   };
 
   return { getGameboard, putSymbol };
@@ -53,14 +51,93 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
 
   const getActivePlayer = () => activePlayer;
 
+  const isWinner = (turn) => {
+    if (turn == 9) {
+      alert("Its a draw");
+    } else if (
+      //X across first row
+      (gameboard.getGameboard()[0][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[0][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[0][2].getValue() == players[0].symbol) ||
+      //X across second row
+      (gameboard.getGameboard()[1][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][2].getValue() == players[0].symbol) ||
+      //X across third row
+      (gameboard.getGameboard()[2][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][2].getValue() == players[0].symbol) ||
+      //X across top left to bottom right
+      (gameboard.getGameboard()[0][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][2].getValue() == players[0].symbol) ||
+      //X across top bottom left to top right
+      (gameboard.getGameboard()[2][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[0][2].getValue() == players[0].symbol) ||
+      //X across first column
+      (gameboard.getGameboard()[0][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][0].getValue() == players[0].symbol) ||
+      //X across second column
+      (gameboard.getGameboard()[0][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][1].getValue() == players[0].symbol) ||
+      //X across third column
+      (gameboard.getGameboard()[2][0].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][1].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[2][2].getValue() == players[0].symbol)
+    ) {
+      alert(players[0].name + " Wins!");
+    } else if (
+      //O across first row
+      (gameboard.getGameboard()[0][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[0][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[0][2].getValue() == players[1].symbol) ||
+      //O across second row
+      (gameboard.getGameboard()[1][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][2].getValue() == players[1].symbol) ||
+      //O across third row
+      (gameboard.getGameboard()[2][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][2].getValue() == players[1].symbol) ||
+      //O across top left to bottom right
+      (gameboard.getGameboard()[0][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][2].getValue() == players[1].symbol) ||
+      //O across top bottom left to top right
+      (gameboard.getGameboard()[2][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[0][2].getValue() == players[1].symbol) ||
+      //O across first column
+      (gameboard.getGameboard()[0][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][0].getValue() == players[1].symbol) ||
+      //O across second column
+      (gameboard.getGameboard()[0][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][1].getValue() == players[1].symbol) ||
+      //O across third column
+      (gameboard.getGameboard()[2][0].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][1].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[2][2].getValue() == players[1].symbol)
+    ) {
+      alert(players[1].name + " Wins!");
+    }
+  };
+
   return {
     switchPlayer,
     getActivePlayer,
     gameboard,
+    isWinner,
   };
 };
 
 const ScreenController = () => {
+  let turn = 0;
+
   const whosTurn = document.querySelector(".whos-turn");
   const divBoard = document.querySelector(".board");
 
@@ -78,12 +155,13 @@ const ScreenController = () => {
         divBoard.append(divBtn);
         whosTurn.textContent = `${game.getActivePlayer().name} (${game.getActivePlayer().symbol})'s turn.`;
         divBtn.addEventListener("click", (e) => {
-          console.log(game.gameboard.getGameboard());
           if (e.target.textContent == "") {
+            turn++;
             e.target.textContent = game.getActivePlayer().symbol;
             game.gameboard.putSymbol(rowIndex, colIndex, game.getActivePlayer());
             game.switchPlayer();
             whosTurn.textContent = `${activePlayer.name} (${activePlayer.symbol})'s turn.`;
+            game.isWinner(turn);
           }
         });
       });
