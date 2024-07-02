@@ -83,8 +83,8 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
         gameboard.getGameboard()[1][1].getValue() == players[0].symbol &&
         gameboard.getGameboard()[2][1].getValue() == players[0].symbol) ||
       //X across third column
-      (gameboard.getGameboard()[2][0].getValue() == players[0].symbol &&
-        gameboard.getGameboard()[2][1].getValue() == players[0].symbol &&
+      (gameboard.getGameboard()[0][2].getValue() == players[0].symbol &&
+        gameboard.getGameboard()[1][2].getValue() == players[0].symbol &&
         gameboard.getGameboard()[2][2].getValue() == players[0].symbol)
     ) {
       setTimeout(() => {
@@ -124,8 +124,8 @@ const GameController = (playerOneName = "Player One", playerTwoName = "Player Tw
         gameboard.getGameboard()[1][1].getValue() == players[1].symbol &&
         gameboard.getGameboard()[2][1].getValue() == players[1].symbol) ||
       //O across third column
-      (gameboard.getGameboard()[2][0].getValue() == players[1].symbol &&
-        gameboard.getGameboard()[2][1].getValue() == players[1].symbol &&
+      (gameboard.getGameboard()[0][2].getValue() == players[1].symbol &&
+        gameboard.getGameboard()[1][2].getValue() == players[1].symbol &&
         gameboard.getGameboard()[2][2].getValue() == players[1].symbol)
     ) {
       setTimeout(() => {
